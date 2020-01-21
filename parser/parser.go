@@ -14,11 +14,6 @@ type Parser struct {
 	errors    []string
 }
 
-func (p *Parser) nextToken() {
-	p.curToken = p.peekToken
-	p.peekToken = p.l.NextToken()
-}
-
 func (p *Parser) ParseProgram() *ast.Program {
 	program := &ast.Program{}
 	program.Statements = []ast.Statement{}
@@ -76,6 +71,11 @@ func (p *Parser) expectPeek(t token.TokenType) bool {
 	p.peekError(t)
 	return false
 
+}
+
+func (p *Parser) nextToken() {
+	p.curToken = p.peekToken
+	p.peekToken = p.l.NextToken()
 }
 
 func (p *Parser) Errors() []string {
